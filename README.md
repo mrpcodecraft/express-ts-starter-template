@@ -22,7 +22,7 @@ Now run following command to start the server.
 ```bash
 npm start
 ```
-You can access the application at http://localhost:**PORT**
+You can access the application at http://localhost:[ **PORT** ]
 
 
 ---
