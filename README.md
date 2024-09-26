@@ -27,4 +27,4 @@ You can access the application at http://localhost:***PORT**
 
 ---
 
-This `README.md` includes only cloning and setup of template for detailed one please refer to [README/SETUP.md].
+This `README.md` includes only cloning and setup of template for detailed one please refer to [README/SETUP.md](https://github.com/mrpcodecraft/express-ts-starter-template/blob/main/README/SETUP.md).
