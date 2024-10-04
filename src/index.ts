@@ -1,3 +1,4 @@
+import "reflect-metadata"; 
 import Server from "./server";
 import * as dotenv from "dotenv";
 
@@ -15,5 +16,6 @@ try {
     server.start();
     
 } catch (err) {
+    console.error("Error starting server:", err);
     process.exit(1);
 }

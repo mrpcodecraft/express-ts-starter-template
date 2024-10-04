@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import {Server as HServer} from "http";
 import path from "path";
 import Router from "./router";
+import ErrorHandlerMiddleware from "./Middlewares/ErrorHandler";
 
 export default class Server {
     private app: express.Application | undefined ;
@@ -30,6 +31,8 @@ export default class Server {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(express.static(path.join(__dirname, "..", "public")));
+
+        this.app.use(ErrorHandlerMiddleware); // Error Handler middlware on application level to handle errors
 
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.header("Access-Control-Allow-Origin", "*");
