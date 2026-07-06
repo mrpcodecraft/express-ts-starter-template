@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction, Router } from "express";
 import AuthenticationMiddleware from "../../Middlewares/Authentication";
 import DTOValidationMiddleware from "../../Middlewares/DTOValidator";
-import AdminUserDTO from "../../DataObjects/AdminUsers/DTO";
+import AdminUserDTO from "./dto";
+import UserService from "./service";
+import { IUser } from "./interface";
+
 
 export default class AdminUserController {
     public router: Router = Router({
@@ -22,10 +25,16 @@ export default class AdminUserController {
     }
 
     private async getAdminUsers(req: Request, res: Response, next: NextFunction) {
-        res.send({
-            name: "test user",
-            email: "test@example.com"
-        })
+        try {
+            const userService: UserService = UserService.getInstance();
+            
+            let data: IUser[] = await userService.getAll();
+    
+            res.send(data);
+        } catch (error) {
+            next(error);
+        }
+        
     }
 
     

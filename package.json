@@ -1,33 +1,46 @@
 {
-  "name": "testingnode",
+  "name": "express-ts-starter-template",
   "version": "1.0.0",
-  "description": "testing node application ",
-  "main": "server.ts",
+  "description": "Express TypeScript Starter Template with Sequelize ORM. The application is structured in a modular way, with each module having its own routes, controllers, services, and models. This structure promotes separation of concerns and makes it easier to maintain and scale the application.",
+  "main": "src/index.js",
+  "module": "commonjs",
+  "moduleResolution": "node",
   "scripts": {
-    "start_app": "tsc && node dist/src/index.js",
+    "start_app": "tsc && node dist/index.js",
     "start": "nodemon --exec npm run start_app",
-    "local": "nodemon index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migration:make": "npx sequelize-cli migration:generate --name",
+    "seed:make": "npx sequelize-cli seed:generate --name",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:seed:undo": "npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [
     "testing"
   ],
-  "author": "mohit raj panday",
+  "author": "Mohit Raj Panday",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^22.7.0",
     "body-parser": "^1.20.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.6.1",
     "express": "^4.21.0",
+    "mysql2": "^3.22.5",
     "nodemon": "^3.1.7",
+    "path": "^0.12.7",
     "reflect-metadata": "^0.2.2",
-    "typescript": "^5.6.2"
+    "sequelize": "^6.37.8",
+    "url": "^0.11.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/reflect-metadata": "^0.1.0"
+    "@types/node": "^26.0.1",
+    "@types/reflect-metadata": "^0.1.0",
+    "sequelize-cli": "^6.6.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   }
 }
