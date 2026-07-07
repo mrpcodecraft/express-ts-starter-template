@@ -1,6 +1,5 @@
 import User from "./model";
 import { IUser } from "./interface";
-import q from "q";
 import HttpException from "../../Exceptions/HTTPExceptions";
 
 export default class UserService {
@@ -17,82 +16,56 @@ export default class UserService {
     return UserService._instance;
   }
   
-  public async getAll(): Promise<IUser[] | HttpException> {
-    const deferred = q.defer<IUser[] | HttpException>();
-
+  public async getAll(): Promise<IUser[]> {
     try {
-      const users = await User.findAll();
-      deferred.resolve(users);
+      return await User.findAll();
     } catch (error) {
-      deferred.reject(new HttpException(500, "Failed to fetch users", error));
+      throw new HttpException(500, "Failed to fetch users", error);
     }
-
-    return deferred.promise;
   }
 
-  public async getById(id: number): Promise<IUser | null | HttpException> {
-    const deferred = q.defer<IUser | null | HttpException>();
-
+  public async getById(id: number): Promise<IUser | null> {
     try {
-      const user = await User.findByPk(id);
-      deferred.resolve(user);
+      return await User.findByPk(id);
     } catch (error) {
-      deferred.reject(new HttpException(500, "Failed to fetch user by id", error));
+      throw new HttpException(500, "Failed to fetch user by id", error);
     }
-
-    return deferred.promise;
   }
 
-  public async create(data: IUser): Promise<IUser | HttpException> {
-    const deferred = q.defer<IUser | HttpException>();
-
+  public async create(data: IUser): Promise<IUser> {
     try {
-      const user = await User.create(data);
-      deferred.resolve(user);
+      return await User.create(data);
     } catch (error) {
-      deferred.reject(new HttpException(500, "Failed to create user", error));
+      throw new HttpException(500, "Failed to create user", error);
     }
-
-    return deferred.promise;
   }
 
-  public async update(id: number, data: Partial<IUser>): Promise<IUser | null | HttpException> {
-    const deferred = q.defer<IUser | null | HttpException>();
-
+  public async update(id: number, data: Partial<IUser>): Promise<IUser | null> {
     try {
       const user = await User.findByPk(id);
 
       if (!user) {
-        deferred.resolve(null);
-        return deferred.promise;
+        return null;
       }
 
-      const updatedUser = await user.update(data);
-      deferred.resolve(updatedUser);
+      return await user.update(data);
     } catch (error) {
-      deferred.reject(new HttpException(500, "Failed to update user", error));
+      throw new HttpException(500, "Failed to update user", error);
     }
-
-    return deferred.promise;
   }
 
-  public async delete(id: number): Promise<boolean | HttpException> {
-    const deferred = q.defer<boolean | HttpException>();
-
+  public async delete(id: number): Promise<boolean> {
     try {
       const user = await User.findByPk(id);
 
       if (!user) {
-        deferred.resolve(false);
-        return deferred.promise;
+        return false;
       }
 
       await user.destroy();
-      deferred.resolve(true);
+      return true;
     } catch (error) {
-      deferred.reject(new HttpException(500, "Failed to delete user", error));
+      throw new HttpException(500, "Failed to delete user", error);
     }
-
-    return deferred.promise;
   }
 }

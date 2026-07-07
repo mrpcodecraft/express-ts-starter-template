@@ -38,7 +38,7 @@ export default class AdminUserController {
         try {
             const userService: UserService = UserService.getInstance();
             
-            const data: IUser[] = (await userService.getAll()) as IUser[];
+            const data: IUser[] = await userService.getAll();
     
             res.send(data);
         } catch (error) {
