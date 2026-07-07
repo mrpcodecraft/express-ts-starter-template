@@ -7,28 +7,38 @@ import { IUser } from "./interface";
 
 
 export default class AdminUserController {
+    private static _instance: AdminUserController | null = null;
+
     public router: Router = Router({
         mergeParams: true,
         strict: true,
         caseSensitive: true
     });
 
-    constructor() {
+    private constructor() {
         this.router = Router();
         this.initRoutes();
     }
 
-    private initRoutes(): void {
-        this.router.use(AuthenticationMiddleware);
-        this.router.get("/", this.getAdminUsers);
-        this.router.post("/", [DTOValidationMiddleware(AdminUserDTO)] ,this.addAdminUser);
+    public static getInstance(): AdminUserController {
+        if (!AdminUserController._instance) {
+            AdminUserController._instance = new AdminUserController();
+        }
+
+        return AdminUserController._instance;
     }
 
-    private async getAdminUsers(req: Request, res: Response, next: NextFunction) {
+    private initRoutes(): void {
+        this.router.use(AuthenticationMiddleware);
+        this.router.get("/", this.getUsers);
+        this.router.post("/", [DTOValidationMiddleware(AdminUserDTO)] ,this.addUser);
+    }
+
+    private async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
             const userService: UserService = UserService.getInstance();
             
-            let data: IUser[] = await userService.getAll();
+            const data: IUser[] = (await userService.getAll()) as IUser[];
     
             res.send(data);
         } catch (error) {
@@ -38,7 +48,7 @@ export default class AdminUserController {
     }
 
     
-    private async addAdminUser(req: Request, res: Response, next: NextFunction) {
+    private async addUser(req: Request, res: Response, next: NextFunction) {
         res.send({
             message: "Admin user added successfully"
         })

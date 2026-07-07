@@ -1,6 +1,6 @@
 import { Application } from "express";
 import { version } from "../package.json";
-import UsersController from "./Modules/Users/contoller";
+import UsersController from "./Modules/Users/controller";
 
 export default class Router {
     private app: Application;
@@ -15,6 +15,6 @@ export default class Router {
         });
 
 
-        this.app.use("/admin", new UsersController().router);
+        this.app.use("/admin", UsersController.getInstance().router);
     }
 }
